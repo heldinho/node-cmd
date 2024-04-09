@@ -1,10 +1,10 @@
+const os = require("os");
 const { exec } = require("child_process");
 
-// Comando que você deseja executar
-const command = "dir"; // Exemplo de comando que lista os arquivos e diretórios no diretório atual
+const list_arm = ["aix", "darwin", "freebsd", "linux", "openbsd", "sunos"];
+const list_win = ["win32"];
 
-// Função para executar o comando
-function executeCommand(command) {
+function cmd(command) {
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error(`Erro ao executar o comando: ${error.message}`);
@@ -18,5 +18,13 @@ function executeCommand(command) {
   });
 }
 
-// Executando o comando
-executeCommand(command);
+function init() {
+  const platform = process.platform;
+  if (list_arm.includes(platform)) {
+    cmd("ls");
+  } else {
+    cmd("cd");
+  }
+}
+
+init();
