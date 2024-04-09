@@ -14,7 +14,21 @@ function cmd(command) {
       console.error(`Erro de saída: ${stderr}`);
       return;
     }
-    console.log(`Saída do comando: ${stdout}`);
+    // console.log(`Saída do comando:\n${stdout}`);
+
+    if (command === "emulator -list-avds") {
+      const list_emulator = stdout.split("\n");
+      exec(`emulator -avd ${list_emulator[1]}`, (error2, stdout2, stderr2) => {
+        if (error2) {
+          console.error(`Erro ao executar o comando: ${error2.message}`);
+        }
+        if (stderr2) {
+          console.error(`Erro de saída: ${stderr2}`);
+          return;
+        }
+        return;
+      });
+    }
   });
 }
 
@@ -25,6 +39,8 @@ function init() {
   } else {
     cmd("cd");
   }
+  cmd("adb devices");
+  cmd("emulator -list-avds");
 }
 
 init();
