@@ -1,4 +1,5 @@
 const os = require("os");
+const readline = require("readline");
 const { exec } = require("child_process");
 
 const list_arm = ["aix", "darwin", "freebsd", "linux", "openbsd", "sunos"];
@@ -43,4 +44,86 @@ function init() {
   cmd("emulator -list-avds");
 }
 
-init();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+function showMenu() {
+  console.log(
+    [
+      "Menu:",
+      "1. Opção 1",
+      "2. Opção 2",
+      "3. Opção 3",
+      "0. Sair",
+      "Escolha uma opção:",
+    ].join("\n")
+  );
+}
+
+function handleChoice(choice) {
+  switch (choice) {
+    case "1":
+      console.log("Você escolheu a Opção 1");
+      console.log("escolheu rodar o emulator");
+      break;
+    case "2":
+      console.log("Você escolheu a Opção 2");
+      console.log("Você escolheu a Opção 2");
+      console.log("Você escolheu a Opção 2");
+      break;
+    case "3":
+      console.log("Você escolheu a Opção 3");
+      console.log("Você escolheu a Opção 3");
+      console.log("Você escolheu a Opção 3");
+      break;
+    case "0":
+      console.log("Saindo...");
+      console.log("Saindo...");
+      console.log("Saindo...");
+      rl.close();
+      break;
+    default:
+      console.log("Opção inválida. Tente novamente.");
+      console.log("Opção inválida. Tente novamente.");
+      console.log("Opção inválida. Tente novamente.");
+      console.log("Opção inválida. Tente novamente.");
+  }
+  showMenu();
+}
+
+showMenu();
+
+rl.on("line", (input) => {
+  handleChoice(input);
+});
+
+function run() {
+  let vRun = true;
+  let op = null;
+
+  while (vRun) {
+    rl.question(`1: init\n2: Opção 2\n3: Opção 3\nDigite aqui: `, (val) => {
+      op = val;
+      rl.close();
+    });
+    switch (op) {
+      case 1:
+        init();
+        break;
+      case 2:
+        console.log("Opção 2");
+        break;
+      case 3:
+        console.log("Opção 3");
+        break;
+      case 0:
+        vRun = false;
+        break;
+      default:
+        console.log("Opção não encontrada");
+        break;
+    }
+  }
+}
